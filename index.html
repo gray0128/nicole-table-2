@@ -1,22 +1,45 @@
 <!DOCTYPE html>
-<html>
+<html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>文件对比工具</title>
-    <link rel="stylesheet" href="styles.css">
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
 </head>
-<body>
-    <h1>文件对比工具</h1>
-    <input type="file" id="file1" accept=".xlsx, .xls">
-    <input type="file" id="file2" accept=".xlsx, .xls">
-    <select id="column1"></select>
-    <select id="column2"></select>
-    <select id="update-table">
-        <option value="1">表 1</option>
-        <option value="2">表 2</option>
-    </select>
-    <button id="compare-btn" disabled>对比</button>
-    <button id="download-btn" disabled>下载</button>
+<body class="bg-gray-100 min-h-screen flex items-center justify-center">
+    <div class="max-w-3xl w-full bg-white p-10 rounded-lg shadow-lg">
+        <h1 class="text-3xl font-bold text-center mb-8 text-gray-800">文件对比工具</h1>
+        <div class="grid grid-cols-1 gap-6">
+            <div>
+                <label class="block mb-2 text-gray-700">上传【表 1】</label>
+                <input type="file" id="file1" accept=".xlsx, .xls" class="border border-gray-300 p-3 w-full rounded">
+            </div>
+            <div>
+                <label class="block mb-2 text-gray-700">上传【表 2】</label>
+                <input type="file" id="file2" accept=".xlsx, .xls" class="border border-gray-300 p-3 w-full rounded">
+            </div>
+            <div>
+                <label class="block mb-2 text-gray-700">选择【表 1】的列</label>
+                <select id="column1" class="border border-gray-300 p-3 w-full rounded"></select>
+            </div>
+            <div>
+                <label class="block mb-2 text-gray-700">选择【表 2】的列</label>
+                <select id="column2" class="border border-gray-300 p-3 w-full rounded"></select>
+            </div>
+            <div>
+                <label class="block mb-2 text-gray-700">更新结果至</label>
+                <select id="updateTarget" class="border border-gray-300 p-3 w-full rounded">
+                    <option value="table1">表 1</option>
+                    <option value="table2">表 2</option>
+                </select>
+            </div>
+        </div>
+        <div class="mt-8 text-center">
+            <button id="compareBtn" class="bg-blue-600 text-white py-3 px-6 rounded-lg hover:bg-blue-700 hidden transition duration-300">对比</button>
+            <button id="downloadBtn" class="bg-green-600 text-white py-3 px-6 rounded-lg hover:bg-green-700 hidden transition duration-300">下载</button>
+        </div>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
     <script src="script.js"></script>
 </body>
 </html>
