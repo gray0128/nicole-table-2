@@ -6,6 +6,10 @@ const updateTableSelect = document.getElementById('update-table');
 const compareBtn = document.getElementById('compare-btn');
 const downloadBtn = document.getElementById('download-btn');
 
+// ...
+
+// ...
+
 // 文件读取函数
 function readExcelFile(file) {
     return new Promise((resolve, reject) => {
@@ -15,13 +19,16 @@ function readExcelFile(file) {
             const workbook = XLSX.read(data, { type: 'binary' });
             const sheetName = workbook.SheetNames[0];
             const sheet = workbook.Sheets[sheetName];
-            const columns = XLSX.utils.sheet_to_json(sheet, { header: 1 })[0];
-            const rows = XLSX.utils.sheet_to_json(sheet);
+            const dataJson = XLSX.utils.sheet_to_json(sheet, { header: 1 });
+            const columns = dataJson[0];
+            const rows = dataJson.slice(1);
             resolve({ columns, rows });
         };
         reader.readAsBinaryString(file);
     });
 }
+
+// ...
 
 // 对比函数
 function compareFiles(file1, file2, column1, column2, updateTable) {
@@ -60,26 +67,30 @@ function downloadFile(data, filename) {
 file1Input.addEventListener('change', (e) => {
     const file = e.target.files[0];
     readExcelFile(file).then((data) => {
+        const columns = data.columns;
         column1Select.innerHTML = '';
-        data.columns.forEach((column) => {
+        columns.forEach((column) => {
             const option = document.createElement('option');
             option.text = column;
             option.value = column;
             column1Select.appendChild(option);
         });
+        column1Select.disabled = false;
     });
 });
 
 file2Input.addEventListener('change', (e) => {
     const file = e.target.files[0];
     readExcelFile(file).then((data) => {
+        const columns = data.columns;
         column2Select.innerHTML = '';
-        data.columns.forEach((column) => {
+        columns.forEach((column) => {
             const option = document.createElement('option');
             option.text = column;
             option.value = column;
             column2Select.appendChild(option);
         });
+        column2Select.disabled = false;
     });
 });
 
